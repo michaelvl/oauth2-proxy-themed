@@ -16,7 +16,9 @@ be served by oath2-proxy).
 
 # Installing
 
-## Create a client secret for oauth2-proxy to use - lookup details in the (oauth2-proxy documentation)[https://oauth2-proxy.github.io/oauth2-proxy/configuration].
+Create a client secret for oauth2-proxy to use - lookup details in the
+(oauth2-proxy
+documentation)[https://oauth2-proxy.github.io/oauth2-proxy/configuration].
 
 ```
 kubectl create secret generic oauth-client-secret --from-literal=client-id=XXXXX --from-literal=client-secret=YYYYYYYYY --from-literal=cookie-secret=$(shell openssl rand -hex 16)
