@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ template "oauth2-proxy-themed.name" . }}
+    chart: {{ template "oauth2-proxy-themed.chart" . }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  name: {{ template "oauth2-proxy-themed.fullname" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ template "oauth2-proxy-themed.name" . }}
+      chart: {{ template "oauth2-proxy-themed.chart" . }}
+      heritage: {{ .Release.Service }}
+      release: {{ .Release.Name }}
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: {{ template "oauth2-proxy-themed.name" . }}
+        chart: {{ template "oauth2-proxy-themed.chart" . }}
+        heritage: {{ .Release.Service }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.pullPolicy }}
+        name: nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: assets-volume
+          mountPath: /usr/share/nginx/html/assets
+      restartPolicy: Always
+      volumes:
+      - name: assets-volume
+        configMap:
+          name: custom-assets

@@ -1,0 +1,46 @@
+oauth2-proxy:
+  # Add any oauth2-proxy configuration here
+  
+  configFile: |-
+    # The custom templates dir option should be part of your config and must match the mount-path in extraVolumeMounts
+    custom_templates_dir = "/templates/"
+
+  # This is needed for the custom themes
+  extraVolumes:
+    - name: html-templates
+      configMap:
+        name: custom-html
+
+  extraVolumeMounts:
+    - mountPath: /templates
+      name: html-templates
+
+# Server for static assets
+image:
+  repository: "docker.io/nginx"
+  tag: "1.17.9"
+  pullPolicy: "IfNotPresent"
+
+# Service for static assets
+service:
+  port: 80
+  annotations: {}
+  # foo.io/bar: "true"
+
+# Ingress for static assets
+# Value passing between child-parent does not work well in Helm, i.e. ingress values needs
+# to be duplicated for both parent and child chart.
+ingress:
+  enabled: false
+  path: /assets
+  # Used to create an Ingress record.
+  # hosts:
+    # - chart-example.local
+  # annotations:
+  #   kubernetes.io/ingress.class: nginx
+  #   kubernetes.io/tls-acme: "true"
+  # tls:
+    # Secrets must be manually created in the namespace.
+    # - secretName: chart-example-tls
+    #   hosts:
+    #     - chart-example.local
