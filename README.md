@@ -48,5 +48,5 @@ max. size of 256k imposed by the Kubernetes API. Using server-side apply
 (`kubectl apply --server-side=true`) will help mitigate this issue.
 
 The icon shown above is from my
-(OSMfocus)[https://github.com/MichaelVL/osm-focus] Android app for
+[OSMfocus](https://github.com/MichaelVL/osm-focus) Android app for
 OpenStreetMap.
