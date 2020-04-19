@@ -6,7 +6,7 @@ metadata:
     chart: {{ template "oauth2-proxy-themed.chart" . }}
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
-  name: {{ template "oauth2-proxy-themed.fullname" . }}
+  name: {{ template "oauth2-proxy-themed.fullname" . }}-assets
 {{- if .Values.service.annotations }}
   annotations:
 {{ toYaml .Values.service.annotations | indent 4 }}

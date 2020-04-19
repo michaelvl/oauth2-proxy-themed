@@ -1,0 +1,63 @@
+{{- if .Values.httpproxy.enabled -}}
+apiVersion: projectcontour.io/v1
+kind: HTTPProxy
+metadata:
+  labels:
+    app: {{ template "oauth2-proxy-themed.name" . }}
+    chart: {{ template "oauth2-proxy-themed.chart" . }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  name: {{ template "oauth2-proxy-themed.fullname" . }}
+{{- with .Values.httpproxy.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+spec:
+  virtualhost:
+    fqdn: {{ .Values.httpproxy.host }}
+  includes:
+   - name: {{ template "oauth2-proxy-themed.fullname" . }}-oauth2-proxy
+     conditions:
+      - prefix: /
+   - name: {{ template "oauth2-proxy-themed.fullname" . }}-assets
+     conditions:
+      - prefix: /assets
+---
+apiVersion: projectcontour.io/v1
+kind: HTTPProxy
+metadata:
+  labels:
+    app: {{ template "oauth2-proxy-themed.name" . }}
+    chart: {{ template "oauth2-proxy-themed.chart" . }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  name: {{ template "oauth2-proxy-themed.fullname" . }}-oauth2-proxy
+{{- with .Values.httpproxy.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+spec:
+  routes:
+    - services:
+        - name: {{ .Release.Name }}-oauth2-proxy
+          port: 80
+---
+apiVersion: projectcontour.io/v1
+kind: HTTPProxy
+metadata:
+  labels:
+    app: {{ template "oauth2-proxy-themed.name" . }}
+    chart: {{ template "oauth2-proxy-themed.chart" . }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  name: {{ template "oauth2-proxy-themed.fullname" . }}-assets
+{{- with .Values.httpproxy.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+spec:
+  routes:
+    - services:
+        - name: {{ template "oauth2-proxy-themed.fullname" . }}-assets
+          port: 80
+{{- end -}}

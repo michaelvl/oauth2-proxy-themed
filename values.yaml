@@ -44,3 +44,16 @@ ingress:
     # - secretName: chart-example-tls
     #   hosts:
     #     - chart-example.local
+
+# Contour HTTPProxy for oauth2-proxy and static assets
+httpproxy:
+  enabled: false
+  path: /assets
+  host: chart-example.local
+  # annotations:
+  #   key: value
+  # tls:
+    # Secrets must be manually created in the namespace.
+    # - secretName: chart-example-tls
+    #   hosts:
+    #     - chart-example.local
