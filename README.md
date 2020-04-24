@@ -14,15 +14,15 @@ The chart works by using the existing custom-html template feature of
 oauth2-proxy together with an add-on web server for static assets (which cannot
 be served by oath2-proxy).
 
-Since the chart extends oauth2-proxy, all the options of that chart are
-available and security-wise this chart does not change the core oauth2-proxy
+Since the chart extends oauth2-proxy, all the options of the oauth2-proxy chart
+are available and security-wise this chart does not change the core oauth2-proxy
 parts.
 
 # Installing
 
 Create a client secret for oauth2-proxy to use - lookup details in the
-(oauth2-proxy
-documentation)[https://oauth2-proxy.github.io/oauth2-proxy/configuration].
+[oauth2-proxy
+documentation](https://oauth2-proxy.github.io/oauth2-proxy/configuration).
 
 ```
 kubectl create secret generic oauth-client-secret --from-literal=client-id=XXXXX --from-literal=client-secret=YYYYYYYYY --from-literal=cookie-secret=$(shell openssl rand -hex 16)
