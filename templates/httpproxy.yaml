@@ -8,13 +8,21 @@ metadata:
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
   name: {{ template "oauth2-proxy-themed.fullname" . }}
-{{- with .Values.httpproxy.annotations }}
+{{- if .Values.httpproxy.annotations }}
   annotations:
-{{ toYaml . | indent 4 }}
+    {{- range $key, $value := .Values.ingress.annotations }}
+    {{ $key }}: {{ tpl $value $ | quote }}
+    {{- end }}
 {{- end }}
 spec:
+{{- if .Values.httpproxy.host }}
   virtualhost:
     fqdn: {{ .Values.httpproxy.host }}
+{{- end }}
+{{- if .Values.httpproxy.tls.secretName }}
+    tls:
+      secretName: {{ .Values.httpproxy.tls.secretName }}
+{{- end }}
   includes:
    - name: {{ template "oauth2-proxy-themed.fullname" . }}-oauth2-proxy
      conditions:
@@ -39,7 +47,7 @@ metadata:
 spec:
   routes:
     - services:
-        - name: {{ .Release.Name }}-oauth2-proxy
+        - name: {{ .Release.Name }}
           port: 80
 ---
 apiVersion: projectcontour.io/v1

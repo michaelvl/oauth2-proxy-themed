@@ -49,11 +49,8 @@ ingress:
 httpproxy:
   enabled: false
   path: /assets
-  host: chart-example.local
-  # annotations:
+  #host: chart-example.local
+  annotations: {}
   #   key: value
-  # tls:
-    # Secrets must be manually created in the namespace.
-    # - secretName: chart-example-tls
-    #   hosts:
-    #     - chart-example.local
+  tls: {}
+    # secretName: chart-example-tls

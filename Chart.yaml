@@ -1,5 +1,5 @@
 name: oauth2-proxy-themed
-version: 0.2.0
+version: 0.3.0
 apiVersion: v2
 appVersion: 5.1.0
 home: https://github.com/MichaelVL/oauth2-proxy-themed
@@ -15,5 +15,5 @@ sources:
 - https://github.com/MichaelVL/oauth2-proxy-themed
 dependencies:
   - name: oauth2-proxy
-    version: 2.4.1
+    version: 3.0.0
     repository: https://kubernetes-charts.storage.googleapis.com
