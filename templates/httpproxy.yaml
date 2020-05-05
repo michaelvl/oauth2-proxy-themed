@@ -8,11 +8,9 @@ metadata:
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
   name: {{ template "oauth2-proxy-themed.fullname" . }}
-{{- if .Values.httpproxy.annotations }}
+{{- with .Values.httpproxy.annotations }}
   annotations:
-    {{- range $key, $value := .Values.ingress.annotations }}
-    {{ $key }}: {{ tpl $value $ | quote }}
-    {{- end }}
+{{ toYaml . | indent 4 }}
 {{- end }}
 spec:
 {{- if .Values.httpproxy.host }}
